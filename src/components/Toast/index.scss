@@ -1,0 +1,44 @@
+#toast{
+  position: relative;
+  z-index: 999;
+}
+.toast{
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  .toast-box{
+      width: 240px;
+      height: 240px;
+      background: rgba(0, 0, 0, .6);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -120px 0 0 -120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      .toast-icon{
+        width: 100px;
+        height: 100px; 
+        margin-bottom: 20px;
+      }
+      span{
+          font-size: 28px;
+          color: #fff;
+      }
+  }
+}
+
+//body的类方法
+body.body-popup{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
