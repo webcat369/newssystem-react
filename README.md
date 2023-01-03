@@ -1,46 +1,39 @@
-# Getting Started with Create React App
+# Newssystem - 新闻发布管理平台
 
-This project was bootstrapped with [Create React](https://github.com/facebook/create-react).
+# 安装依赖组建
+npm install
 
-## Available Scripts
+# 运行
+npm run start
 
-In the project directory, you can run:
+# 打包
+npm run build
 
-### `npm start`
+#### 介绍
+这是一个React全家桶联系项目，业务为新闻后台管理
+实现一个新闻发布管理平台，业务目标：
+* 用户登录
+* 游客访问：浏览新闻
+* 用户管理：新增用户、修改用户、删除用户、禁用用户
+* 权限管理：角色管理、页面访问权限控制、侧边栏权限控制
+* 新闻业务：撰写新闻、草稿箱、新闻审核、新闻发布及下线等
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### 技术选型
+* [create-react-app](https://www.html.cn/create-react-app/docs/proxying-api-requests-in-development/)：脚手架
+* [React Hooks](https://zh-hans.reactjs.org/docs/hooks-reference.html#usestate)：函数式编程，用过的都说真的爽
+* [React Router V6](https://reactrouterdotcom.fly.dev/docs/en/v6/upgrading/v5#remove-redirects-inside-switch)：路由控制访问，V6升级了许多东西
+* [Recat Redux](https://cn.redux.js.org/tutorials/essentials/part-1-overview-concepts/)：状态管理，组件通信
+* [Antd组件库](https://ant.design/components/overview-cn/)：你为什么要使用react？
+* [axios](https://www.axios-http.cn/docs/intro):实现网络请求
+* [JSON Server](https://www.npmjs.com/package/json-server):生成数据接口
+* [react-tsparticles](https://www.npmjs.com/package/react-tsparticles):登陆页面粒子美化
+* [draft-js](https://draftjs.org/docs/quickstart-rich-styling)：富文本编辑
+* [draftjs-to-html]():富文本转换html
+* [html-to-draftjs]():html转换富文本
+* [Echarts](https://echarts.apache.org/handbook/zh/get-started/)：数据可视化（柱状图、饼图）
+* [Sass](https://www.sass.hk/docs/): CSS辅助工具，实现变量、嵌套、导入
+* [http-proxy-middleware](https://create-react-app.dev/docs/proxying-api-requests-in-development#configuring-the-proxy-manually):开发环境反向代理跨域（前期使用练手，JSON Server不需要~）；引入后需要重启服务器
+* CSS Modules: CSS模块化，选取class```.moduleTest```或id选择器，将CSS module文件引入style变量，设置```className={style.moduleTest}```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 文档
+请参考[项目文档](https://www.cnblogs.com/shixiu/p/15983351.html)
