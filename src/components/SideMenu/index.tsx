@@ -122,6 +122,8 @@ function SideMenu(props:any) {
     })
   }
   const onClick: MenuProps['onClick'] = item => {
+    console.log(item.key,'路由映射');
+    
     history.push(item.key)
   };
 

@@ -18,7 +18,7 @@ export default function BaseRouter() {
         <Route path="/news" component={News}/>
         <Route path="/detail/:id" component={Detail}/>
         {/* {localStorage.getItem("token") ? <Route path="/home" component={NewsSandBox} exact /> : <Redirect from="/" to="/login" exact/>} */}
-        {localStorage.getItem("token")?<Route path="/home" component={NewsSandBox} />:<Redirect to="/login" />}
+        {localStorage.getItem("token")?<Route path="/*" component={NewsSandBox} />:<Redirect to="/login" />}
       </Switch>
     </Router>
   )
