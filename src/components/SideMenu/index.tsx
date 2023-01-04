@@ -81,7 +81,7 @@ function SideMenu(props:any) {
     const data = await slideList({
       _embed:'children'
     });
-    console.log(data,'data');
+    console.log(data,'侧边导航');
     
     setMenu(data)
   }

@@ -47,8 +47,8 @@ function NewsRouter(props:any) {
     Promise.all(
       [slideList({}),childrenList({})]
       ).then((res) => {
-      console.log([...res[0], ...res[1]],'res');
-      setBackRouteList([...res[0], ...res[1].data] as any)
+      console.log([...res[0], ...res[1]],'初始化所有路由列表');
+      setBackRouteList([...res[0], ...res[1]] as any)
     })
   },[])
 
