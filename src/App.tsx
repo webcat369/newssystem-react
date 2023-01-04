@@ -7,7 +7,7 @@ import {store} from "./redux/store"
 const App = () => {
   return (
     <Provider store={store}>
-    <BaseRouter></BaseRouter>
+      <BaseRouter></BaseRouter>
     </Provider> 
   )
 }

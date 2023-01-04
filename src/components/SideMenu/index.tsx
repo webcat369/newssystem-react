@@ -4,7 +4,7 @@ import './../SideMenu/index.scss'
 import { Layout, Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import { UserOutlined,ContainerOutlined,AppstoreOutlined,SettingOutlined,MailOutlined,LinkOutlined } from '@ant-design/icons';
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {connect} from 'react-redux'
 
 import {slideList} from '../../api/slideList/index'
@@ -70,7 +70,7 @@ const iconList:any = {
 
 function SideMenu(props:any) {
   const [menu,setMenu] = useState([])
-  const history = useHistory()
+  const navigate = useNavigate()
   //初始化侧边栏内容列表
   useEffect(() => {
     getSildeList()
@@ -124,7 +124,7 @@ function SideMenu(props:any) {
   const onClick: MenuProps['onClick'] = item => {
     console.log(item.key,'路由映射');
     
-    history.push(item.key)
+    navigate(item.key)
   };
 
   return (

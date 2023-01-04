@@ -6,13 +6,13 @@ import {
   MenuFoldOutlined,
   UserOutlined
 } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const { Header } = Layout;
 
 function TopHeader(props:any) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const changeCollapsed =  () => {
     props.changeCollapsed()
   }
@@ -33,7 +33,7 @@ function TopHeader(props:any) {
     if (e.key === 'leave') {
       console.log('退出');
       localStorage.removeItem('token');
-      history.push('/login')
+      navigate('/login')
     }
   };
   return (

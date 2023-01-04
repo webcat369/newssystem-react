@@ -5,10 +5,10 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import {users} from './../../api/user/index'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
-  const history = useHistory()
+  const navigate = useNavigate()
   const onFinish = async (values:any) => {
     const data = await users({
       username:values.username,
@@ -19,10 +19,10 @@ export default function Login() {
     console.log(data,'res');
     
     if(data.length===0){
-      message.error("用户名或密码不匹配")
+        message.error("用户名或密码不匹配")
     }else{
-      history.push('/home')
-      localStorage.setItem("token",JSON.stringify(data[0]))
+        navigate('/home')
+        localStorage.setItem("token",JSON.stringify(data[0]))
     }
   }
 

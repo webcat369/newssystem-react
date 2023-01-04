@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css';
 import './api/request'
+
 // 方式一
 // import ReactDOM from 'react-dom/client'
 // import BaseRouter from './router'
