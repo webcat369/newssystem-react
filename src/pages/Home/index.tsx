@@ -1,7 +1,7 @@
 import React,{useRef,useState,useEffect} from 'react'
 import { Col, Row, Card, Avatar, List, Drawer } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import {news} from '../../api/news/index'
+import {news} from 'api/news'
 // 按需引入lodash
 import {groupBy} from 'lodash-es'
 // 按需引入echarts

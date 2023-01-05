@@ -8,7 +8,7 @@ function urlHandle (url: string) {
   if (url.startsWith('https://') || url.startsWith('http://')) {
     return url
   } else if (url.startsWith('/')) {
-    return base.baseUrl + url.substr(1)
+    return base.baseUrl + url.substr(0)
   } else {
     return base.baseUrl + url
   }

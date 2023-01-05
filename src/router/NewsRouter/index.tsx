@@ -2,8 +2,8 @@ import React,{useState,useEffect,Suspense,lazy} from 'react'
 import {connect} from 'react-redux'
 import { Spin } from 'antd'
 import { Routes,Route,Navigate} from "react-router-dom"
-import {slideList} from '../../api/slideList/index'
-import {childrenList} from '../../api/childrenList/index'
+import {slideList} from 'api/slideList'
+import {childrenList} from 'api/childrenList'
 
 //路由懒加载
 import Home from '../../pages/Home/index'
@@ -24,19 +24,19 @@ const NewsUpdate = lazy(()=> import('../../pages/NewsManage/Update'))
 // 路由与组件映射
 const LocalRouterMap:any = {
   "/home": <Home />,
-  "/user-manage/list": <UserList />,
-  "/right-manage/role/list": <RoleList />,
-  "/right-manage/right/list": <RightList />,
-  "/news-manage/add": <NewsAdd />,
-  "/news-manage/draft": <NewsDraft />,
-  "/news-manage/preview/:id":<NewsPreview />,
-  "/news-manage/update/:id":<NewsUpdate />,
-  "/news-manage/category": <NewsCategory />,
-  "/audit-manage/audit": <Audit />,
-  "/audit-manage/list": <AuditList />,
-  "/publish-manage/unpublished": <Unpublished />,
-  "/publish-manage/published": <Published />,
-  "/publish-manage/sunset":<Sunset />
+  "/user-manage/list": <UserList />, //用户列表
+  "/right-manage/role/list": <RoleList />, //角色列表
+  "/right-manage/right/list": <RightList />, //权限列表
+  "/news-manage/add": <NewsAdd />, //撰写新闻
+  "/news-manage/draft": <NewsDraft />, //草稿箱
+  "/news-manage/preview/:id":<NewsPreview />, //新闻预览
+  "/news-manage/update/:id":<NewsUpdate />, //新闻更新
+  "/news-manage/category": <NewsCategory />, //新闻分类
+  "/audit-manage/audit": <Audit />, //审核新闻
+  "/audit-manage/list": <AuditList />, //审核列表
+  "/publish-manage/unpublished": <Unpublished />, //待发布
+  "/publish-manage/published": <Published />, //已发布
+  "/publish-manage/sunset":<Sunset /> //已下线
 }
 
 function NewsRouter(props:any) {

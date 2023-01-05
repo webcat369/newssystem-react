@@ -7,7 +7,7 @@ import { UserOutlined,ContainerOutlined,AppstoreOutlined,SettingOutlined,MailOut
 import { useNavigate, useLocation } from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {slideList} from '../../api/slideList/index'
+import {slideList} from 'api/slideList'
 
 const { Sider } = Layout;
 // const { SubMenu } = Menu;

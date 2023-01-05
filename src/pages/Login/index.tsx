@@ -4,7 +4,7 @@ import { Form, Button, Input,message } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
-import {users} from './../../api/user/index'
+import {users} from 'api/user'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
