@@ -103,8 +103,6 @@ export default function Home() {
   //初始化饼图
   const renderPieView = () => {
     console.log('饼图');
-    
-
     let currentList = allList.filter((item:any) => item.author === username)
     let groupObj = groupBy(currentList,(item:any) => item.category.title)
     let list:any = []
@@ -233,8 +231,9 @@ export default function Home() {
             }
             actions={[
               <SettingOutlined key="setting" onClick={() => {
+                setvisible(true)
+                // 报错：Initialize failed: invalid dom. 解决办法：setTimeout
                 setTimeout(()=>{
-                  setvisible(true)
                   renderPieView()
                 },10)
               }}/>,
