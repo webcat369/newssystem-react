@@ -1,14 +1,18 @@
-import React,{useState,useEffect} from 'react'
-import {Table,Switch,Button} from 'antd'
+import React,{useState,useEffect,useRef} from 'react'
+import {Table,Switch,Button,Modal} from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { users,handleuUers } from 'api/user'
+import { users,patchUers } from 'api/user'
 import { regions } from 'api/regions'
 import { roles } from 'api/roles'
+import UserFrom from '../../components/UserManage/UserFrom'
 
 export default function UserList() {
   const [dataSource,setdataSource] = useState([])
   const [regionList,setregionList] = useState([])
-  const {roleId,region,username} =  localStorage.getItem('token')?JSON.parse(localStorage.getItem('token') || '') : null
+  const [roleList, setroleList] = useState([]);
+  const addForm = useRef(null as any) //useRef:any()
+  const [isAddlVisible,setisAddlVisible] = useState(false)
+  const {roleId,region,username} =  localStorage.getItem('token') ?JSON.parse(localStorage.getItem('token') || '') : null
 
   useEffect(() => {
     getDataSource()
@@ -47,6 +51,7 @@ export default function UserList() {
   const getRoles = async () => {
     const list = await roles()
     console.log(list,'角色列表');
+    setroleList(list)
   }
 
   const columns = [
@@ -105,13 +110,9 @@ export default function UserList() {
     console.log(item,'开关',dataSource);
     item.roleState = !item.roleState;
     setdataSource([...dataSource]);
-    await handleuUers(item.id,{
+    await patchUers(item.id,{
       roleState: item.roleState
     })
-  }
-
-  const showModal = () => {
-    console.log('增加用户');
   }
 
   const confirmDelete = (item:any) => {
@@ -122,9 +123,32 @@ export default function UserList() {
     console.log('编辑');
   }
 
+  const showModal = () => {
+    console.log('增加用户');
+    setisAddlVisible(true)
+  }
+
+  const handleAddOk = () => {
+      console.log('ok');
+      addForm.current.validateFields().then((value:any) => {
+        console.log(value,'结果');
+      }) 
+      // setisAddlVisible(false)
+  }
+
+  const handleAddCancel = () => {
+    console.log('cnacel');
+    setisAddlVisible(false)
+  }
+
   return (
     <div>
       <Button type='primary' onClick={showModal}>增加用户</Button>
+
+      <Modal title="增加用户" open={isAddlVisible} onOk={handleAddOk} onCancel={handleAddCancel}>
+        <UserFrom ref={addForm} regionList={regionList} roleList={roleList} />
+      </Modal>
+
       <Table 
         dataSource={dataSource}
         columns={columns} 
