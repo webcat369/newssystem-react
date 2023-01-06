@@ -4,6 +4,7 @@
 npm install
 
 # 运行
+json-server --watch db.json --port 3000
 npm run start
 
 # 打包

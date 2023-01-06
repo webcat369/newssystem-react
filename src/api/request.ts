@@ -1,5 +1,5 @@
 import base from './base'
-import global from '../config/global'
+// import global from '../config/global'
 import Toast from '../components/Toast/index'
 import {encode} from 'utils/rsa'
 import {store} from '../redux/store'
@@ -40,12 +40,14 @@ function netTimeout (netPromise: Promise<any>, timeout: number = 30000) {
 const request: {
   get(url: string, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
   post(url: string, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
+  patch(url: string, urlStr?: string | number, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
 } = {
   get (url, params = {}, options) {
     let newUrl = urlHandle(url)
     let paramsArray: string[] = []
+    
     Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
-    newUrl += '?' + paramsArray.join('&')
+    newUrl = Object.keys(params).length === 0 ? newUrl : newUrl + '?' + paramsArray.join('&')
     let request = new Promise((resolve, reject) => {
       fetch(newUrl)
         .then((response) => {
@@ -103,30 +105,45 @@ const request: {
         body: options?.isEncrypt ? encode(JSON.stringify(params)) : JSON.stringify(params),
       })
         .then((response) => {
+          // 显示loading
+          store.dispatch({
+            type:"change_loading",
+            payload:true
+          })
           // 得到的是一个promise对象，用于获取后台返回的数据
           // eslint-disable-next-line no-throw-literal
           if (response.status !== 200) throw { type: 'status', status: response.status, msg: response.statusText }
           return response.json()
         })
         .then((data) => {
+          //隐藏loading
+          store.dispatch({
+            type:"change_loading",
+            payload:false
+          })
           // 这里才是得到的最终数据
-          if (data.Code !== base.successCode && data.Code !== base.noDataCode) {
-            if (data.Code === base.loginInvalidCode) {
-              global.token = ''
-            }
-            // eslint-disable-next-line no-throw-literal
-            throw { type: 'code', code: data.Code, msg: data.Msg }
-          }
-          try {
-            if (options?.cache) {
-              sessionStorage.setItem(options?.cache + '', JSON.stringify(data))
-            }
-          } catch (err) {
-            console.log('缓存出错')
-          }
+          // if (data.Code !== base.successCode && data.Code !== base.noDataCode) {
+          //   if (data.Code === base.loginInvalidCode) {
+          //     global.token = ''
+          //   }
+          //   // eslint-disable-next-line no-throw-literal
+          //   throw { type: 'code', code: data.Code, msg: data.Msg }
+          // }
+          // try {
+          //   if (options?.cache) {
+          //     sessionStorage.setItem(options?.cache + '', JSON.stringify(data))
+          //   }
+          // } catch (err) {
+          //   console.log('缓存出错')
+          // }
           resolve(data)
         })
         .catch((err) => {
+          //隐藏loading
+          store.dispatch({
+            type:"change_loading",
+            payload:false
+          })
           if (!options || !options.noToast) {
             let text
             if (err.type === 'status' || err.type === 'code') {
@@ -141,6 +158,53 @@ const request: {
     })
     return netTimeout(request)
   },
+  patch(url,urlStr, params = {},options){
+    let str = urlStr ? '/' + urlStr : ''
+    let newUrl = urlHandle(url) + str
+    let request = new Promise((resolve, reject) => {
+      fetch(newUrl, {
+        method: 'PATCH',
+        body: JSON.stringify(params),
+      })
+        .then((response) => {
+          // 显示loading
+          store.dispatch({
+            type:"change_loading",
+            payload:true
+          })
+          // 得到的是一个promise对象，用于获取后台返回的数据
+          // eslint-disable-next-line no-throw-literal
+          if (response.status !== 200) throw { type: 'status', status: response.status, msg: response.statusText }
+          return response.json()
+        })
+        .then((data) => {
+          //隐藏loading
+          store.dispatch({
+            type:"change_loading",
+            payload:false
+          })
+          resolve(data)
+        })
+        .catch((err) => {
+          //隐藏loading
+          store.dispatch({
+            type:"change_loading",
+            payload:false
+          })
+          if (!options || !options.noToast) {
+            let text
+            if (err.type === 'status' || err.type === 'code') {
+              text = err.msg
+            } else {
+              text = '网络连接失败，请检查网络设置'
+            }
+            Toast.show(text || '服务器繁忙', 3000)
+          }
+          reject(err)
+        })
+    })
+    return netTimeout(request)
+  }
 }
 
 export default request

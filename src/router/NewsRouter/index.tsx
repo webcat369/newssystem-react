@@ -45,7 +45,7 @@ function NewsRouter(props:any) {
   // 初始化所有路由列表
   useEffect(() => {
     Promise.all(
-      [slideList({}),childrenList({})]
+      [slideList(),childrenList()]
       ).then((res) => {
       console.log([...res[0], ...res[1]],'初始化所有路由列表');
       setBackRouteList([...res[0], ...res[1]] as any)
