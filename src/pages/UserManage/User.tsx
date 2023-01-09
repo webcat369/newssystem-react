@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import React,{useState,useEffect,useRef} from 'react'
 import {Table,Switch,Button,Modal} from 'antd'
 import { DeleteOutlined, EditOutlined,ExclamationCircleOutlined } from '@ant-design/icons'
