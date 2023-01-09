@@ -103,16 +103,24 @@ const request: {
       fetch(newUrl, {
         method: 'POST',
         body: options?.isEncrypt ? encode(JSON.stringify(params)) : JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        // headers: {
+        //   'Content-Type': 'application/x-www-form-urlencoded'
+        // },
+        // body: "key=value"
       })
         .then((response) => {
           // 显示loading
           store.dispatch({
             type:"change_loading",
             payload:true
-          })
+          })      
+
           // 得到的是一个promise对象，用于获取后台返回的数据
           // eslint-disable-next-line no-throw-literal
-          if (response.status !== 200) throw { type: 'status', status: response.status, msg: response.statusText }
+          // if (response.status !== 200) throw { type: 'status', status: response.status, msg: response.statusText }
           return response.json()
         })
         .then((data) => {
@@ -165,6 +173,9 @@ const request: {
       fetch(newUrl, {
         method: 'PATCH',
         body: JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
         .then((response) => {
           // 显示loading
@@ -178,6 +189,7 @@ const request: {
           return response.json()
         })
         .then((data) => {
+          console.log(data,'fatch');
           //隐藏loading
           store.dispatch({
             type:"change_loading",

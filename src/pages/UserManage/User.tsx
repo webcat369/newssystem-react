@@ -1,17 +1,22 @@
+/* eslint-disable array-callback-return */
 import React,{useState,useEffect,useRef} from 'react'
 import {Table,Switch,Button,Modal} from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { users,patchUers } from 'api/user'
+import { users,patchUers,postUers } from 'api/user'
 import { regions } from 'api/regions'
 import { roles } from 'api/roles'
 import UserFrom from '../../components/UserManage/UserFrom'
 
 export default function UserList() {
-  const [dataSource,setdataSource] = useState([])
+  const [dataSource,setdataSource] = useState([] as any)
   const [regionList,setregionList] = useState([])
   const [roleList, setroleList] = useState([]);
   const addForm = useRef(null as any) //useRef:any()
+  const updateForm:any = useRef(null)
   const [isAddlVisible,setisAddlVisible] = useState(false)
+  const [isUpdatelVisible,setisUpdatelVisible] = useState(false)
+  const [current,setcurrent] = useState([] as any)
+  const [isUpdateDisabled,setisUpdateDisabled] =  useState(false)
   const {roleId,region,username} =  localStorage.getItem('token') ?JSON.parse(localStorage.getItem('token') || '') : null
 
   useEffect(() => {
@@ -119,8 +124,21 @@ export default function UserList() {
     console.log('删除');
   }
 
-  const showUpdate = (item:any) => {
-    console.log('编辑');
+  const showUpdate = async (item:any) => {
+    console.log(item,'更新用户');
+    await setisUpdatelVisible(true)
+    if(item.roleId === 1){
+      setisUpdateDisabled(true)
+    }else{
+      setisUpdateDisabled(false)
+    }
+    //报错：TypeError: Cannot read properties of null (reading 'setFieldsValue')
+    //方法一：async await
+    //方法二：
+    // setTimeout(() => {
+      updateForm.current.setFieldsValue(item)
+    // })
+    setcurrent(item)
   }
 
   const showModal = () => {
@@ -129,11 +147,26 @@ export default function UserList() {
   }
 
   const handleAddOk = () => {
-      console.log('ok');
-      addForm.current.validateFields().then((value:any) => {
-        console.log(value,'结果');
-      }) 
-      // setisAddlVisible(false)
+    addForm.current.validateFields().then(async (value:any) => {
+      setisAddlVisible(false)
+      // 清空表单
+      addForm.current.resetFields();
+
+      const data = await postUers({
+        ...value,
+        roleState: true,
+        default: false
+      })
+      //重新渲染表单
+      setdataSource([...dataSource, {
+        ...data,
+        // 提交数据中没有角色名称，是关联得来的
+        role: roleList.filter((item:any) => item.id === value.roleId)[0]
+      }])
+    })
+    .catch((err:any) => {
+      console.log(err);
+    })
   }
 
   const handleAddCancel = () => {
@@ -141,12 +174,46 @@ export default function UserList() {
     setisAddlVisible(false)
   }
 
+  const handleUpdateOk = () => {
+    updateForm.current.validateFields().then(async (value:any) => {
+      console.log(value,'确定更新');
+      setisUpdatelVisible(false)
+      
+      //重新渲染
+      setdataSource(dataSource.map((item:any) => {
+        if(item.id === current.id){
+          console.log(item,'修改',current);
+          return{
+            ...item,  //当前未修改的数据
+            ...value, //当前修改过的那条数据
+            // 提交数据中没有角色名称，是关联得来的
+            role: roleList.filter((item:any) => item.id === value.roleId)[0]
+          }
+        }
+        return item
+      }))
+      setisUpdateDisabled(!isUpdateDisabled);
+      await patchUers(current.id,value)
+    }).catch((err:any)=> {
+      console.log(err);
+    })
+  }
+
+  const handleUpdateCancel = () => {
+    console.log('取消更新');
+    setisUpdatelVisible(false)
+  }
+
   return (
     <div>
       <Button type='primary' onClick={showModal}>增加用户</Button>
 
-      <Modal title="增加用户" open={isAddlVisible} onOk={handleAddOk} onCancel={handleAddCancel}>
+      <Modal title="增加用户" okText="确定" cancelText="取消"  open={isAddlVisible} onOk={handleAddOk} onCancel={handleAddCancel}>
         <UserFrom ref={addForm} regionList={regionList} roleList={roleList} />
+      </Modal>
+
+      <Modal title="更新用户" okText="确定" cancelText="取消"  open={isUpdatelVisible} onOk={handleUpdateOk} onCancel={handleUpdateCancel}>
+        <UserFrom ref={updateForm} regionList={regionList} roleList={roleList} isUpdateDisabled={isUpdateDisabled}/>
       </Modal>
 
       <Table 

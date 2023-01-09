@@ -1,12 +1,40 @@
-import React,{forwardRef } from 'react'
+import React,{forwardRef, useEffect } from 'react'
 import { Form, Input,Select } from 'antd';
 
 const { Option } = Select;
 
-const UserFrom = forwardRef((props:any, addForm: any) => {
+const UserFrom = forwardRef((props:any, ref: any) => {
+  useEffect(() => {
+    console.log(props.isUpdate,'isUpdate');
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  const {region,roleId} = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token') || '') : null
+  const roleObj:any = {
+    "1":"superadmin",
+    "2":"admin",
+    "3":"editor"
+  }
+
+  const checkRegionDisabled = (item:any) => {
+    if(roleObj[roleId] === 'superadmin'){
+      return false
+    }else{
+      return item.region !== region
+    }
+  }
+
+  const checkRoleDisabled = (item:any) => {
+    if(roleObj[roleId] === 'superadmin'){
+      return false
+    }else{
+      return roleObj[item.id] !== 'editor'
+    }
+  }
+
   return (
     <Form
-      ref={addForm}
+      ref={ref}
       layout="vertical"
     >
       <Form.Item
@@ -33,7 +61,9 @@ const UserFrom = forwardRef((props:any, addForm: any) => {
         <Select disabled={false}>
           {
             props.regionList.map((item:any) => {
-              return (<Option key={item.id} value={item.vlaue}>{item.title}</Option>)
+              return (<Option key={item.id} value={item.value} disabled={
+                checkRegionDisabled(item)
+              }>{item.title}</Option>)
             })
           }
         </Select>
@@ -47,7 +77,7 @@ const UserFrom = forwardRef((props:any, addForm: any) => {
         <Select>
          {
           props.roleList.map((item:any) => {
-            return (<Option key={item.id} value={item.value}>{item.roleName}</Option>)
+            return (<Option key={item.id} value={item.id} disabled={checkRoleDisabled(item)}>{item.roleName}</Option>)
           })
          }
         </Select>
