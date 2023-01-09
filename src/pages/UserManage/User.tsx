@@ -1,11 +1,13 @@
 /* eslint-disable array-callback-return */
 import React,{useState,useEffect,useRef} from 'react'
 import {Table,Switch,Button,Modal} from 'antd'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { users,patchUers,postUers } from 'api/user'
+import { DeleteOutlined, EditOutlined,ExclamationCircleOutlined } from '@ant-design/icons'
+import { users,UpdateUers,addUers,deleteUers } from 'api/user'
 import { regions } from 'api/regions'
 import { roles } from 'api/roles'
 import UserFrom from '../../components/UserManage/UserFrom'
+
+const { confirm } = Modal
 
 export default function UserList() {
   const [dataSource,setdataSource] = useState([] as any)
@@ -35,15 +37,15 @@ export default function UserList() {
       2:"admin", //区域管理员：新增、删除、编辑本用户及本区域下的区域编辑用户
       3:"editor" //区域编辑：没有本页面权限
     }
-    const data = await users({
+    const list = await users({
       _expand:"role"
     })
 
-    console.log(data,'用户列表');
-    setdataSource(roleObj[roleId] === 'superadmin' ? data : [
+    console.log(list,'用户列表');
+    setdataSource(roleObj[roleId] === 'superadmin' ? list : [
       // 超级管理员不限制，区域管理员：自己+自己区域编辑，区域编辑：看不到用户列表
-      ...data.map((item:any) => item.username === username),
-      ...data.map((item:any) => item.region === region && roleObj[item.roleId] === 'editor')
+      ...list.filter((item:any) => item.username === username),
+      ...list.filter((item:any) => item.region === region && roleObj[item.roleId] === 'editor')
     ])
   }
 
@@ -74,7 +76,6 @@ export default function UserList() {
         },
       ],
       onFilter: (value:any, item:any) => {
-        console.log(value,item);
         if(value === '全球'){
           return item.region === ''
         }
@@ -104,24 +105,37 @@ export default function UserList() {
       title: '操作',
       render:(item:any) => {
         return (<div>
-          <Button danger shape="circle" icon={<DeleteOutlined />} size="middle" onClick={() => confirmDelete(item)} />
-          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" onClick={() => showUpdate(item)}/>
+          <Button danger shape="circle" icon={<DeleteOutlined />} size="middle" disabled={item.default} onClick={() => confirmDelete(item)} />
+          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" disabled={item.default} onClick={() => showUpdate(item)}/>
         </div>)
       }
     },
   ]
 
   const switchMethod = async (item:any) => {
-    console.log(item,'开关',dataSource);
     item.roleState = !item.roleState;
     setdataSource([...dataSource]);
-    await patchUers(item.id,{
+    await UpdateUers(item.id,{
       roleState: item.roleState
     })
   }
 
   const confirmDelete = (item:any) => {
     console.log('删除');
+    confirm({
+      title:'你确定要删除吗？',
+      icon:<ExclamationCircleOutlined/>,
+      onOk(){
+        deleteMethod(item)
+      },
+      onCancel(){}
+    })
+  }
+
+  const deleteMethod = async (item:any) => {
+    setdataSource(dataSource.filter((data:any) => data.id !== item.id))
+    //删除
+    await deleteUers(item.id)
   }
 
   const showUpdate = async (item:any) => {
@@ -152,7 +166,7 @@ export default function UserList() {
       // 清空表单
       addForm.current.resetFields();
 
-      const data = await postUers({
+      const data = await addUers({
         ...value,
         roleState: true,
         default: false
@@ -169,8 +183,8 @@ export default function UserList() {
     })
   }
 
+  //取消新增
   const handleAddCancel = () => {
-    console.log('cnacel');
     setisAddlVisible(false)
   }
 
@@ -182,18 +196,17 @@ export default function UserList() {
       //重新渲染
       setdataSource(dataSource.map((item:any) => {
         if(item.id === current.id){
-          console.log(item,'修改',current);
           return{
             ...item,  //当前未修改的数据
             ...value, //当前修改过的那条数据
             // 提交数据中没有角色名称，是关联得来的
-            role: roleList.filter((item:any) => item.id === value.roleId)[0]
+            role: roleList.filter((data:any) => data.id === value.roleId)[0]
           }
         }
         return item
       }))
-      setisUpdateDisabled(!isUpdateDisabled);
-      await patchUers(current.id,value)
+      setisUpdateDisabled(!isUpdateDisabled)
+      await UpdateUers(current.id,value)
     }).catch((err:any)=> {
       console.log(err);
     })
@@ -202,6 +215,7 @@ export default function UserList() {
   const handleUpdateCancel = () => {
     console.log('取消更新');
     setisUpdatelVisible(false)
+    setisUpdateDisabled(!isUpdateDisabled)
   }
 
   return (

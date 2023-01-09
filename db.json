@@ -82,13 +82,22 @@
       "id": 10
     },
     {
-      "username": "玲",
+      "username": "rain",
+      "password": "123456",
+      "region": "亚洲",
+      "roleId": 2,
+      "roleState": true,
+      "default": false,
+      "id": 11
+    },
+    {
+      "username": "ling",
       "password": "123456",
       "region": "亚洲",
       "roleId": 3,
       "roleState": true,
       "default": false,
-      "id": 11
+      "id": 12
     }
   ],
   "roles": [

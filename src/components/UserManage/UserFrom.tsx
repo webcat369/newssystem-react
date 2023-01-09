@@ -1,14 +1,15 @@
-import React,{forwardRef, useEffect } from 'react'
+import React,{forwardRef, useEffect,useState } from 'react'
 import { Form, Input,Select } from 'antd';
 
 const { Option } = Select;
 
 const UserFrom = forwardRef((props:any, ref: any) => {
+  const [isDisabled,setisDisabled] = useState(false)
   useEffect(() => {
     console.log(props.isUpdate,'isUpdate');
-    
+    setisDisabled(props.isUpdateDisabled)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[props.isUpdateDisabled])
   const {region,roleId} = localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token') || '') : null
   const roleObj:any = {
     "1":"superadmin",
@@ -56,9 +57,9 @@ const UserFrom = forwardRef((props:any, ref: any) => {
       <Form.Item
         label="区域"
         name="region"
-        rules={[{ required: true, message: '请输入区域!' }]}
+        rules={isDisabled ? [] : [{ required: true, message: '请输入区域!' }]}
       >
-        <Select disabled={false}>
+        <Select disabled={isDisabled}>
           {
             props.regionList.map((item:any) => {
               return (<Option key={item.id} value={item.value} disabled={
@@ -74,7 +75,16 @@ const UserFrom = forwardRef((props:any, ref: any) => {
         name="roleId"
         rules={[{ required: true, message: '请输入角色!' }]}
       >
-        <Select>
+        <Select onChange={(value:any) => {
+          if(value === 1){
+            setisDisabled(true)
+            ref.current.setFieldsValue({
+              region:''
+            })
+          }else{
+            setisDisabled(false)
+          }
+        }}>
          {
           props.roleList.map((item:any) => {
             return (<Option key={item.id} value={item.id} disabled={checkRoleDisabled(item)}>{item.roleName}</Option>)
