@@ -77,13 +77,13 @@ export default function RoleList() {
   const handleOk = async () => {
     setisModalVisible(false)
     setdataSource(dataSource.map((item:any) => {
-      if (item.id===currentId) {
+      if (item.id === currentId) { // 选中的那行角色id
         return {
           ...item,
-          rights:currentRights
+          rights:currentRights //新的路由信息去覆盖旧的路由信息
         }
       }
-      return item
+      return item //未选中的其余行信息
     }));
     await UpdateRoles(currentId,{
       rights:currentRights

@@ -20,10 +20,10 @@
     },
     {
       "username": "诸葛山珍",
-      "password": "123aaa",
+      "password": "123",
       "roleState": true,
       "default": false,
-      "region": "非洲",
+      "region": "北美洲",
       "roleId": 2,
       "id": 4
     },
@@ -82,18 +82,18 @@
       "id": 10
     },
     {
-      "username": "rain",
+      "username": "玲",
       "password": "123456",
-      "region": "亚洲",
-      "roleId": 2,
+      "region": "北美洲",
+      "roleId": 3,
       "roleState": true,
       "default": false,
       "id": 11
     },
     {
-      "username": "ling",
+      "username": "玲",
       "password": "123456",
-      "region": "亚洲",
+      "region": "北美洲",
       "roleId": 3,
       "roleState": true,
       "default": false,
@@ -106,6 +106,9 @@
       "roleName": "超级管理员",
       "roleType": 1,
       "rights": [
+        "/user-manage/add",
+        "/user-manage/delete",
+        "/user-manage/update",
         "/right-manage",
         "/right-manage/right/list",
         "/right-manage/role/update",
@@ -129,10 +132,7 @@
         "/right-manage/role/list",
         "/right-manage/role/delete",
         "/right-manage/right/delete",
-        "/home",
-        "/user-manage/update",
-        "/user-manage/add",
-        "/user-manage/delete"
+        "/home"
       ]
     },
     {
