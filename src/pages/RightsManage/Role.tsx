@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Table,Button,Modal,Tree } from 'antd';
 import { DeleteOutlined, EditOutlined ,ExclamationCircleOutlined } from '@ant-design/icons'
-import { roles,DeleteRoles } from 'api/roles/index'
+import { roles,DeleteRoles,UpdateRoles } from 'api/roles/index'
 import { slideList } from 'api/slideList/index'
 
 const { confirm } = Modal;
@@ -45,20 +45,20 @@ export default function RoleList() {
     {
       title: '操作',
       render:(item:any) => {
-        <div>
+        return <div>
          <Button danger shape="circle" icon={<DeleteOutlined />} size="middle" onClick={() => confirmDelete(item)} />
-          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" onClick={(item:any) => {
-            setisModalVisible(true)
-            setcurrentRights(item.rights)
-            setcurrentId(item.id)
-          }}/>
+          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" onClick={() => {
+          setisModalVisible(true);
+          setcurrentRights(item.rights);
+          setcurrentId(item.id);
+        }}/>
         </div>
       }
     },
   ];
 
   const confirmDelete = (item:any) => {
-    console.log('权限分配-删除');
+    console.log('删除');
     confirm({
       title:'你确定要删除吗？',
       icon:<ExclamationCircleOutlined/>,
@@ -74,7 +74,7 @@ export default function RoleList() {
     await DeleteRoles(item.id)
   }
 
-  const handleOk = () => {
+  const handleOk = async () => {
     setisModalVisible(false)
     setdataSource(dataSource.map((item:any) => {
       if (item.id===currentId) {
@@ -85,14 +85,18 @@ export default function RoleList() {
       }
       return item
     }));
+    await UpdateRoles(currentId,{
+      rights:currentRights
+    })
   }
 
   const handleCancel = () => {
     setisModalVisible(false)
   }
 
-  const onCheck  = (checkedKeys:any) => {
-    console.log('Tree');
+  const onCheck  = (checkedKeys:any,e:any) => {
+    // console.log(checkedKeys,'选择',e);
+    setcurrentRights(checkedKeys.checked)
   }
 
   return (
@@ -107,9 +111,11 @@ export default function RoleList() {
 
       <Modal title="权限分配" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Tree
-        checkable
-        onCheck={onCheck}
-        treeData={rightList}
+          checkable
+          checkStrictly
+          onCheck={onCheck}
+          treeData={rightList}
+          checkedKeys={currentRights}
         />
       </Modal>
     </div>

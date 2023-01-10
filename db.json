@@ -106,9 +106,6 @@
       "roleName": "超级管理员",
       "roleType": 1,
       "rights": [
-        "/user-manage/add",
-        "/user-manage/delete",
-        "/user-manage/update",
         "/right-manage",
         "/right-manage/right/list",
         "/right-manage/role/update",
@@ -132,7 +129,10 @@
         "/right-manage/role/list",
         "/right-manage/role/delete",
         "/right-manage/right/delete",
-        "/home"
+        "/home",
+        "/user-manage/update",
+        "/user-manage/add",
+        "/user-manage/delete"
       ]
     },
     {
