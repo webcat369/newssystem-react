@@ -1,13 +1,17 @@
 import React,{useState,useEffect} from 'react'
 import { Table,Button,Modal,Tree } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import { roles } from 'api/roles/index'
+import { DeleteOutlined, EditOutlined ,ExclamationCircleOutlined } from '@ant-design/icons'
+import { roles,DeleteRoles } from 'api/roles/index'
 import { slideList } from 'api/slideList/index'
 
+const { confirm } = Modal;
+
 export default function RoleList() {
-  const [dataSource,setdataSource] = useState([])
+  const [dataSource,setdataSource] = useState([] as any)
   const [isModalVisible,setisModalVisible] = useState(false)
   const [rightList,setrightList] = useState([])
+  const [currentRights,setcurrentRights] = useState([]) //当前角色拥有的权限下的路由信息
+  const [currentId,setcurrentId] = useState(0)
 
   useEffect(() => {
     getRolesList()
@@ -43,8 +47,10 @@ export default function RoleList() {
       render:(item:any) => {
         <div>
          <Button danger shape="circle" icon={<DeleteOutlined />} size="middle" onClick={() => confirmDelete(item)} />
-          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" onClick={() => {
+          <Button type="primary" shape="circle" icon={<EditOutlined />} size="middle" onClick={(item:any) => {
             setisModalVisible(true)
+            setcurrentRights(item.rights)
+            setcurrentId(item.id)
           }}/>
         </div>
       }
@@ -53,20 +59,41 @@ export default function RoleList() {
 
   const confirmDelete = (item:any) => {
     console.log('权限分配-删除');
+    confirm({
+      title:'你确定要删除吗？',
+      icon:<ExclamationCircleOutlined/>,
+      onOk(){
+        getDeleteRoles(item)
+      },
+      onCancel(){},
+    })
+  }
+
+  const getDeleteRoles = async (item:any) => {
+    setdataSource(dataSource.filter((data:any) => data.id !== item.id))
+    await DeleteRoles(item.id)
   }
 
   const handleOk = () => {
     setisModalVisible(false)
+    setdataSource(dataSource.map((item:any) => {
+      if (item.id===currentId) {
+        return {
+          ...item,
+          rights:currentRights
+        }
+      }
+      return item
+    }));
   }
 
   const handleCancel = () => {
     setisModalVisible(false)
   }
 
-  const onCheck  = () => {
-
+  const onCheck  = (checkedKeys:any) => {
+    console.log('Tree');
   }
-
 
   return (
     <div>

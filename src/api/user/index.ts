@@ -16,6 +16,6 @@ export function addUers (param: any): Promise<any> {
 }
 
 //删除用户
-export function deleteUers (urlStr:string|number): Promise<any> {
+export function DeleteUers (urlStr:string|number): Promise<any> {
   return request.delete('/users',urlStr)
 }

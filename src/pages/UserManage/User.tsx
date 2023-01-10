@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useRef} from 'react'
 import {Table,Switch,Button,Modal} from 'antd'
 import { DeleteOutlined, EditOutlined,ExclamationCircleOutlined } from '@ant-design/icons'
-import { users,UpdateUers,addUers,deleteUers } from 'api/user'
+import { users,UpdateUers,addUers,DeleteUers } from 'api/user'
 import { regions } from 'api/regions'
 import { roles } from 'api/roles'
 import UserFrom from '../../components/UserManage/UserFrom'
@@ -134,7 +134,7 @@ export default function UserList() {
   const deleteMethod = async (item:any) => {
     setdataSource(dataSource.filter((data:any) => data.id !== item.id))
     //删除
-    await deleteUers(item.id)
+    await DeleteUers(item.id)
   }
 
   const showUpdate = async (item:any) => {
