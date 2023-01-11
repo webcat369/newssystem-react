@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
-import { PageHeader,Steps } from 'antd';
+import { PageHeader,Steps,Form } from 'antd';
+import style from './scss/News.module.scss'
+
 
 export default function Add() {
   const [current,setcurrent] = useState(0)
@@ -25,7 +27,14 @@ export default function Add() {
         className="site-page-header"
         title="撰写新闻"
         subTitle="This is a Write news"/>
+
       <Steps items={stepsItem} current={current} /> 
+
+      <div className={current === 0 ? '' : style.active}>
+        <Form>
+
+        </Form>
+      </div>
     </div>
   )
 }
