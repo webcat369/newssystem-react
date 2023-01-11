@@ -91,7 +91,7 @@ export default function Category() {
     await deleteCategories(item.id)
   }
 
-  // 参考https://ant.design/components/table-cn/#components-table-demo-edit-cell
+  // 参考https://4x.ant.design/components/table-cn/#components-table-demo-edit-cell
   // 使用Context来实现跨层级的组件数据传递
   const EditableContext = React.createContext(null as any);
 
