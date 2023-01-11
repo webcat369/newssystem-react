@@ -179,7 +179,7 @@
         "/publish-manage",
         "/publish-manage/unpublished",
         "/publish-manage/published",
-        "/publish-manage/sunset",
+        "/publish-manage/sunset",   
         "/audit-manage/audit",
         "/news-manage/list",
         "/news-manage/add",

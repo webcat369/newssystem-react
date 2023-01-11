@@ -95,7 +95,9 @@ export default function RightsList() {
       await DeleteSlideList(item.id)
     }else{
       const list =  dataSource.filter((data:any) => data.id === item.rightId)
-
+      list[0].children = list[0].children.filter((data:any) => data.id !== item.id)
+      setdataSource([...dataSource])
+      await DeleteChildrenList(item.id)
     }
   }
 

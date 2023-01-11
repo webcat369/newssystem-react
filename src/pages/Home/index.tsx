@@ -65,9 +65,9 @@ export default function Home() {
     const data = await news({
       publishState:2,
       _expand:'category',
-      _sort:'view',
-      _order:'desc',
-      _limit:6
+      _sort:'view', // 根据view字段排序
+      _order:'desc', // desc:降序，asc:升序
+      _limit:6 // 限制6条
     })
     console.log(data,'用户最常浏览');
     setviewList(data)
