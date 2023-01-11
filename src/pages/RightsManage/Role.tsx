@@ -62,6 +62,8 @@ export default function RoleList() {
     confirm({
       title:'你确定要删除吗？',
       icon:<ExclamationCircleOutlined/>,
+      okText: '确认',
+      cancelText: '取消',
       onOk(){
         getDeleteRoles(item)
       },

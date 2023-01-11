@@ -124,6 +124,8 @@ export default function UserList() {
     confirm({
       title:'你确定要删除吗？',
       icon:<ExclamationCircleOutlined/>,
+      okText: '确认',
+      cancelText: '取消',
       onOk(){
         deleteMethod(item)
       },

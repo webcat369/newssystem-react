@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Draft() {
   return (
-    <div>Draft</div>
+    <div>草稿箱</div>
   )
 }

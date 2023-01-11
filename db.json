@@ -179,7 +179,7 @@
         "/publish-manage",
         "/publish-manage/unpublished",
         "/publish-manage/published",
-        "/publish-manage/sunset",   
+        "/publish-manage/sunset",
         "/audit-manage/audit",
         "/news-manage/list",
         "/news-manage/add",
@@ -401,7 +401,7 @@
     {
       "id": 1,
       "title": "时事新闻",
-      "value": "时事新闻"
+      "value": "时事新"
     },
     {
       "id": 2,
@@ -607,6 +607,7 @@
       "categoryId": 6,
       "content": "<ul>\n<li>dfasdf</li>\n<li>restgzrdaestgrse43564</li>\n<li>edcw34qv 534vg53454fv</li>\n</ul>\n",
       "region": "全球",
+      "author": "admin",
       "roleId": 1,
       "auditState": 0,
       "publishState": 0,
@@ -701,20 +702,6 @@
       "id": 18
     },
     {
-      "title": "555555555",
-      "categoryId": 3,
-      "content": "<p>撒大苏打实打hahahahh打实打实大苏打实打实</p>\n",
-      "region": "亚洲",
-      "author": "司马海味",
-      "roleId": 3,
-      "auditState": 2,
-      "publishState": 0,
-      "createTime": 1635585567963,
-      "star": 0,
-      "view": 0,
-      "id": 23
-    },
-    {
       "title": "3eeeeeeeeeeee",
       "categoryId": 3,
       "content": "<p>ssssssssssssss</p>\n",
@@ -800,7 +787,7 @@
     },
     {
       "title": "牛马",
-      "categroyId": 2,
+      "categoryId": 2,
       "content": "<p>😂kkk</p>\n",
       "region": "全球",
       "author": "admin",
@@ -810,22 +797,22 @@
       "createTime": 1657286582909,
       "star": 0,
       "view": 0,
-      "id": 22
+      "id": 22,
+      "publishTime": 1635942719549
     },
     {
-      "title": "hello word",
-      "categoryId": 1,
-      "content": "<p>你好</p>\n",
-      "region": "全球",
-      "author": "admin",
-      "roleId": 1,
+      "title": "555555555",
+      "categoryId": 3,
+      "content": "<p>撒大苏打实打hahahahh打实打实大苏打实打实</p>\n",
+      "region": "亚洲",
+      "author": "司马海味",
+      "roleId": 3,
       "auditState": 2,
-      "publishState": 2,
-      "createTime": 1672208643362,
+      "publishState": 0,
+      "createTime": 1635585567963,
       "star": 0,
       "view": 0,
-      "id": 24,
-      "publishTime": 1672208674064
+      "id": 23
     }
   ]
 }
