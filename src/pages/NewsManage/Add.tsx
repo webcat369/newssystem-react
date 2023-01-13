@@ -5,6 +5,7 @@ import style from './scss/News.module.scss'
 import { categories } from 'api/categories'
 import { addNews } from 'api/news'
 import NewsEditor from 'components/NewsManage/NewsEditor'
+import './scss/sacrollBar.scss'
 
 const { Option } = Select
 
@@ -42,14 +43,14 @@ export default function Add() {
   ]
 
   const handleSave = async (auditState:number) => {
-    console.log(auditState,'保存到草稿箱,提交审核');
+    console.log(auditState,'0:草稿箱,1:提交审核');
     const data = await addNews({
       ...formInfo,
       content:content,
       region: User.region ? User.region : '全球',
       author: User.author,
       roleId: User.roleId,
-      auditState: auditState,
+      auditState: auditState, //0:草稿箱,1:提交审核
       publishState: 0,
       createTime: Date.now(),
       star: 0,
@@ -58,7 +59,7 @@ export default function Add() {
     console.log(data,'上传');
     
     if(data){
-      navigate(auditState === 0 ? '/news-manage/draft' : '/audit-manage/list')
+      navigate(auditState === 0 ? '/news-manage/draft' : '/audit-manage/list') //0:草稿箱 1:审核列表
       notification.info({
         message: `通知`,
         description:
@@ -124,14 +125,24 @@ export default function Add() {
       </div>
 
       <div className={current === 1 ? '' : style.active}>
-        <NewsEditor getContent={(value:any)=>{
-                        console.log(value,'setcontent')
-                        setcontent(value)
-                    }}/>
+        <NewsEditor 
+          getContent={(value:any)=>{
+            console.log(value,'setcontent')
+            setcontent(value)
+        }}/>
       </div>
 
       <div className={current === 2 ? '' : style.active}>
-        <div dangerouslySetInnerHTML = {{ __html: content }}></div>
+        <div
+          dangerouslySetInnerHTML = {{ __html: content }}
+          style={{
+            margin:"24px 0",
+            padding:'15px',
+            border:"1px solid gray",
+            height:'500px',
+            overflow: 'hidden',
+            overflowY: 'auto',
+          }}></div>
       </div>
 
       <div style={{ marginTop:'50px' }}>

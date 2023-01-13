@@ -28,7 +28,7 @@ export default function NewsEditor(props:any) {
       toolbarClassName="aaaaa"
       wrapperClassName="bbbbb"
       editorClassName="ccccc"
-      onEditorStateChange={(editorState)=>seteditorState(editorState)}
+      onEditorStateChange={(editorState)=>seteditorState(editorState)} //富文本获取值
 
       onBlur={()=>{
           // console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())))
