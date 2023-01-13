@@ -1,7 +1,9 @@
 import React,{useState,useRef,useEffect} from 'react'
-import { PageHeader,Steps,Form,Input,Select,Button,message } from 'antd';
+import { useNavigate } from 'react-router-dom'
+import { PageHeader,Steps,Form,Input,Select,Button,message,notification } from 'antd';
 import style from './scss/News.module.scss'
 import { categories } from 'api/categories'
+import { addNews } from 'api/news'
 import NewsEditor from 'components/NewsManage/NewsEditor'
 
 const { Option } = Select
@@ -12,6 +14,8 @@ export default function Add() {
   const [content,setcontent] = useState('' as any)
   const NewsForm = useRef(null as any)
   const [formInfo, setformInfo] = useState({})
+  const User = JSON.parse(localStorage.getItem('token') || '')
+  const navigate = useNavigate()
 
   useEffect(() => {
     getCategories()
@@ -37,9 +41,31 @@ export default function Add() {
     }
   ]
 
-  const handleSave = (value:number) => {
-    console.log(value,'保存到草稿箱,提交审核');
+  const handleSave = async (auditState:number) => {
+    console.log(auditState,'保存到草稿箱,提交审核');
+    const data = await addNews({
+      ...formInfo,
+      content:content,
+      region: User.region ? User.region : '全球',
+      author: User.author,
+      roleId: User.roleId,
+      auditState: auditState,
+      publishState: 0,
+      createTime: Date.now(),
+      star: 0,
+      view: 0,
+    })
+    console.log(data,'上传');
     
+    if(data){
+      navigate(auditState === 0 ? '/news-manage/draft' : '/audit-manage/list')
+      notification.info({
+        message: `通知`,
+        description:
+          `您可以到${auditState===0?'草稿箱':'审核列表'}中查看您的新闻`,
+        placement:"bottomRight",
+      })
+    }
   }
 
   const handleNext = () => {
