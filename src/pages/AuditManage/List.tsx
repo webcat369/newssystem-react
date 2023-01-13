@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react'
-import { Table,Tag,Button  } from 'antd'
+import { Table,Tag,Button,notification  } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { users } from 'api/user'
+import { users,UpdateUers } from 'api/user'
 
 export default function List() {
   const [dataSource ,setdataSource] = useState([])
   const { username } = JSON.parse(localStorage.getItem('token') || '')
+  const navigate = useNavigate()
 
   useEffect(() => {
     getToExamine()
@@ -70,16 +71,42 @@ export default function List() {
     }
   ]
 
-  const handleRervert = (item:any) => {
-
+  //撤销审核
+  const handleRervert = async (item:any) => {
+    // 重新设置待审核数据
+    setdataSource(dataSource.filter((data:any)=>data.id!==item.id))
+    // 修改本条数据审核状态
+    const data = await UpdateUers(item.id,{
+      auditState:0
+    })
+    if(data){
+      notification.info({
+        message: `通知`,
+        description:`您可以到草稿箱中查看您的新闻`,
+        placement: "bottomRight"
+      })
+    }
   }
 
-  const handlePublish = (item:any) => {
-
+  //发布新闻
+  const handlePublish = async (item:any) => {
+    const data = await UpdateUers(item.id,{
+      auditState:2,
+      publishTime:Date.now()
+    })
+    if(data){
+      navigate(`/publish-manage/published`)
+      notification.info({
+        message: `通知`,
+        description: `您可以到【发布管理/已经发布】中查看您的新闻`,
+        placement: "bottomRight"
+      });
+    }
   }
 
+  //更新新闻
   const handleUpdate = (item:any) => {
-    
+    navigate(`/news-manage/update/${item.id}`)
   }
 
   return (
