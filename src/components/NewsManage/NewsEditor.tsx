@@ -26,8 +26,8 @@ export default function NewsEditor(props:any) {
       <Editor 
       editorState={editorState}
       toolbarClassName="aaaaa"
-      wrapperClassName="bbbbb"
-      editorClassName="ccccc"
+      wrapperClassName="bbbbb" // 包裹区类名
+      editorClassName="ccccc"  // 编辑区类名
       onEditorStateChange={(editorState)=>seteditorState(editorState)} //富文本获取值
 
       onBlur={()=>{
