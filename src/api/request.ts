@@ -38,17 +38,18 @@ function netTimeout (netPromise: Promise<any>, timeout: number = 30000) {
 }
 
 const request: {
-  get(url: string, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
+  get(url: string, params?: { [key: string]: string | number },urlStr?:string | number,urlArr?:string[], options?: { [key: string]: string | number }): Promise<any>;
   post(url: string, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
   patch(url: string, urlStr?: string | number, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
   delete(url: string, urlStr?: string | number, options?: { [key: string]: string | number }): Promise<any>;
 } = {
-  get (url, params = {}, options) {
-    let newUrl = urlHandle(url)
+  get (url,params = {},urlStr,urlArr = [], options) {
+    let str = urlStr ? '/' + urlStr : ''
+    let newUrl = urlHandle(url) + str
     let paramsArray: string[] = []
-    
     Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]))
-    newUrl = Object.keys(params).length === 0 ? newUrl : newUrl + '?' + paramsArray.join('&')
+    newUrl = Object.keys(params).length === 0 ? newUrl : urlArr.length === 0 ? newUrl + '?' + paramsArray.join('&') : urlArr.join('&')
+
     let request = new Promise((resolve, reject) => {
       fetch(newUrl)
         .then((response) => {
