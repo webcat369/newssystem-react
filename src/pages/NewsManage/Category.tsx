@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef,useContext} from 'react'
-import { Table,Button,Modal,Form,Input} from 'antd';
+import { Table,Button,Modal,Form,Input,Breadcrumb} from 'antd';
 import { DeleteOutlined,ExclamationCircleOutlined } from '@ant-design/icons';
 import { categories,undateCategories,deleteCategories } from 'api/categories'
 
@@ -171,6 +171,12 @@ export default function Category() {
 
   return (
     <div>
+       <Breadcrumb>
+        <Breadcrumb.Item>新闻管理</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a href="/news-manage/category">新闻分类</a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <Table 
         dataSource={dataSource} 
         columns={columns} 
@@ -183,6 +189,9 @@ export default function Category() {
             row: EditableRow,
             cell: EditableCell,
           }
+        }}
+        style={{
+          marginTop:'20px'
         }}
       />
     </div>

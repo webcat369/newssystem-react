@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { news,UpdateNews } from 'api/news'
-import {Table,Button,notification} from 'antd'
+import {Table,Button,notification,Breadcrumb} from 'antd'
 
 export default function Audit() {
   const [dataSource,setdataSource] = useState([])
@@ -82,10 +82,20 @@ export default function Audit() {
 
   return (
     <div>
+      <Breadcrumb>
+        <Breadcrumb.Item>审核管理</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a href="/audit-manage/audit">审核新闻</a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
+
       <Table 
         dataSource={dataSource} 
         columns={columns} 
         rowKey={(item:any) => item.id}
+        style={{
+          marginTop:'20px'
+        }}
         pagination={{
           pageSize: 5
         }} 

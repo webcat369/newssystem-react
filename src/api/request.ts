@@ -40,7 +40,7 @@ function netTimeout (netPromise: Promise<any>, timeout: number = 30000) {
 const request: {
   get(url: string, params?: { [key: string]: string | number },urlStr?:string | number,urlArr?:string[], options?: { [key: string]: string | number }): Promise<any>;
   post(url: string, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
-  patch(url: string, urlStr?: string | number, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
+  patch(url: string, urlStr?: string | number | undefined, params?: { [key: string]: string | number }, options?: { [key: string]: string | number }): Promise<any>;
   delete(url: string, urlStr?: string | number, options?: { [key: string]: string | number }): Promise<any>;
 } = {
   get (url,params = {},urlStr,urlArr = [], options) {

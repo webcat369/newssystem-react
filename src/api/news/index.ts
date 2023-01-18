@@ -11,7 +11,7 @@ export function addNews (param: any): Promise<any> {
 }
 
 //修改新闻
-export function UpdateNews (UrlStr:number | string,param: any): Promise<any> {
+export function UpdateNews (UrlStr?: string | number | undefined, param?: any): Promise<any> {
   return request.patch('/news', UrlStr, param)
 }
 

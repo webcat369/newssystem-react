@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Table,Tag,Button,notification  } from 'antd'
+import { Table,Tag,Button,notification,Breadcrumb  } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { users,UpdateUers } from 'api/user'
 
@@ -111,10 +111,20 @@ export default function List() {
 
   return (
     <div>
+      <Breadcrumb>
+        <Breadcrumb.Item>审核管理</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a href="/audit-manage/list">审核列表</a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <Table 
         dataSource={dataSource} 
         columns={columns}
-        rowKey={(item:any) => item.id}/>
+        rowKey={(item:any) => item.id}
+        style={{
+          marginTop:'20px'
+        }}
+        />
     </div>
   )
 }

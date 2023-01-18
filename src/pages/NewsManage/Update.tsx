@@ -45,12 +45,12 @@ export default function Update() {
   }
   
   const handleSave = async (auditState:number) => {
-    // const data = await UpdateNews(id,{
-    //   ...formInfo,
-    //   "content": content,
-    //   "auditState": auditState,
-    // })
-    console.log('保存草稿箱',id); 
+    const data = await UpdateNews(id,{
+      ...formInfo,
+      "content": content,
+      "auditState": auditState,
+    })
+    console.log('保存草稿箱',id,data); 
     
   }
 
@@ -95,8 +95,14 @@ export default function Update() {
 
   // 24栅格布局
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 },
+    labelCol: { 
+      // span: 4
+      flex: '110px'
+    },
+    wrapperCol: { 
+      // span: 20
+      flex: 1 
+    },
   }
 
   return (
@@ -109,7 +115,7 @@ export default function Update() {
 
         <Steps items={stepsItem} current={current}  />
 
-        <div className={current === 0 ? '' : style.active}>
+        <div className={current === 0 ? style.interval : style.active}>
           <Form
             {...layout}
             name='base'
@@ -127,7 +133,7 @@ export default function Update() {
           </Form>
         </div>
 
-        <div className={current === 1 ? '' : style.active}>
+        <div className={current === 1 ? style.interval : style.active}>
           <NewsEditor 
             getCount={(value:any) => {
               setcontent(value)
@@ -135,7 +141,7 @@ export default function Update() {
             content={content}/>
         </div>
 
-        <div className={current === 2 ? '' : style.active}>
+        <div className={current === 2 ? style.interval : style.active}>
           <div
             dangerouslySetInnerHTML = {{ __html: content }}
             style={{

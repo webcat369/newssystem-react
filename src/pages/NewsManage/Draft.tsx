@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Table,Button,Modal,notification } from 'antd';
+import { Table,Button,Modal,notification,Breadcrumb } from 'antd';
 import { DeleteOutlined,EditOutlined,UploadOutlined,ExclamationCircleOutlined } from '@ant-design/icons';
 import { news,UpdateNews,DeleteNews } from 'api/news'
 import { useNavigate } from 'react-router-dom'
@@ -114,6 +114,12 @@ export default function Draft() {
 
   return (
     <div>
+      <Breadcrumb>
+        <Breadcrumb.Item>新闻管理</Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <a href="/news-manage/draft">草稿箱</a>
+        </Breadcrumb.Item>
+      </Breadcrumb>
       <Table 
         dataSource={dataSource} 
         columns={columns} 
@@ -121,6 +127,9 @@ export default function Draft() {
         pagination={{
           pageSize: 5
         }} 
+        style={{
+          marginTop:'20px'
+        }}
       />
     </div>
   )

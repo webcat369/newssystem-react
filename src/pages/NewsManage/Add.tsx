@@ -93,8 +93,14 @@ export default function Add() {
 
   // 24栅格布局
   const layout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 20 },
+    labelCol: { 
+      // span: 4
+      flex: '110px'
+    },
+    wrapperCol: { 
+      // span: 20
+      flex: 1 
+    },
   }
 
   return (
@@ -106,9 +112,12 @@ export default function Add() {
 
       <Steps items={stepsItem} current={current} /> 
 
-      <div className={current === 0 ? '' : style.active}>
+      <div className={current === 0 ? style.interval : style.active}>
         <Form 
           {...layout}
+          labelAlign="left"
+          labelWrap //可以开启 label 换行
+          colon={true} // 是否显示 label 后面的冒号
           name="basic"
           ref={NewsForm}>
             <Form.Item label="新闻标题" name="title" rules={[{ required: true, message: '请输入新闻标题' }]}>
@@ -124,7 +133,7 @@ export default function Add() {
         </Form>
       </div>
 
-      <div className={current === 1 ? '' : style.active}>
+      <div className={current === 1 ? style.interval : style.active}>
         <NewsEditor 
           getContent={(value:any)=>{
             console.log(value,'setcontent')
@@ -132,7 +141,7 @@ export default function Add() {
         }}/>
       </div>
 
-      <div className={current === 2 ? '' : style.active}>
+      <div className={current === 2 ? style.interval : style.active}>
         <div
           dangerouslySetInnerHTML = {{ __html: content }}
           style={{
