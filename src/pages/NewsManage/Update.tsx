@@ -45,11 +45,13 @@ export default function Update() {
   }
   
   const handleSave = async (auditState:number) => {
-    const data = await UpdateNews(id,{
-      ...formInfo,
-      "content": content,
-      "auditState": auditState,
-    })
+    // const data = await UpdateNews(id,{
+    //   ...formInfo,
+    //   "content": content,
+    //   "auditState": auditState,
+    // })
+    console.log('保存草稿箱',id); 
+    
   }
 
   const handleNext = () => {
