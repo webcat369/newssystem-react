@@ -1,0 +1,44 @@
+import React from 'react'
+import {Table} from 'antd'
+
+export default function NewsPublish(props:any) {
+  const columns = [
+    {
+        title: '新闻标题',
+        dataIndex: 'title',
+        render: (title:string,item:any) => {
+            return <a href={`#/news-manage/preview/${item.id}`}>{title}</a>
+        }
+    },
+    {
+        title: '作者',
+        dataIndex: 'author'
+    },
+    {
+        title: "新闻分类",
+        dataIndex: 'category',
+        render: (category:any) => {
+            return <div>{category.title}</div>
+        }
+    },
+    {
+        title: "操作",
+        render: (item:any) => {
+            return <div>
+                {props.button(item.id)}
+            </div>
+        }
+    }
+];
+
+  return (
+    <div>
+      <Table columns={columns} 
+              dataSource={props.dataSource} 
+              pagination={{
+                  pageSize: 5
+              }} 
+              rowKey={item=>item.id}/>
+    </div>
+  )
+}

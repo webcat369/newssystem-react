@@ -48,7 +48,7 @@ export default function Add() {
       ...formInfo,
       content:content,
       region: User.region ? User.region : '全球',
-      author: User.author,
+      author: User.username,
       roleId: User.roleId,
       auditState: auditState, //0:草稿箱,1:提交审核
       publishState: 0,

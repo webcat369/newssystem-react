@@ -36,7 +36,7 @@ export default function RightsList() {
       title: '权限路径',
       dataIndex: 'key',
       render:(key:string) => {
-        return <Tag color='volcano' key={key}>{key}</Tag>
+        return <Tag color='magenta' key={key}>{key}</Tag>
       }
     },
     {

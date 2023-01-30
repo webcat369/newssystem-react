@@ -40,7 +40,7 @@ function TopHeader(props:any) {
     <Header className="site-layout-background" style={{ padding: '0 16px' }}>
       {props.isCollapsed ? <MenuUnfoldOutlined onClick={changeCollapsed} /> : <MenuFoldOutlined onClick={changeCollapsed} />}
       <div style={{ float: "right" }}>
-        <span>欢迎<span style={{color:"#1890ff"}}>{username}</span>回来</span>
+        <span style={{marginRight:'20px'}}>欢迎<span style={{color:"#1890ff"}}>{username}</span>回来</span>
         <Dropdown menu={{items,onClick: handleMenuClick}}>
           <span>
           <Avatar size="large" icon={<UserOutlined />} />

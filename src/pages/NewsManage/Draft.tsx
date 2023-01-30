@@ -54,11 +54,11 @@ export default function Draft() {
     },
     {
       title:'操作',
-      render:() => {
+      render:(item:any) => {
         return <div>
-          <Button danger shape="circle" icon={<DeleteOutlined />} onClick={(item) => confirmMethod(item)}></Button>
-          <Button shape="circle" icon={<EditOutlined />} onClick={(item) => updateMethod(item)}></Button>
-          <Button type="primary" shape="circle" icon={<UploadOutlined />} onClick={(item) => handleCheck(item)}></Button>
+          <Button danger shape="circle" icon={<DeleteOutlined />} onClick={() => confirmMethod(item)}></Button>
+          <Button shape="circle" icon={<EditOutlined />} onClick={() => updateMethod(item)}></Button>
+          <Button type="primary" shape="circle" icon={<UploadOutlined />} onClick={() => handleCheck(item)}></Button>
         </div>
       }
     }

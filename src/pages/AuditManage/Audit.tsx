@@ -4,9 +4,12 @@ import {Table,Button,notification,Breadcrumb} from 'antd'
 
 export default function Audit() {
   const [dataSource,setdataSource] = useState([])
-  const {roleId,region,username} = JSON.parse(localStorage.getItem('token') || '')
+  const {roleId,region,username} =  JSON.parse(localStorage.getItem('token') || '')
 
+ // 设置待审核（auditState=1）新闻数据
   useEffect(() => {
+    console.log(roleId,region,username);
+    
     getNews()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleId,region,username])
@@ -24,7 +27,7 @@ export default function Audit() {
       _expand:'category'
     })
 
-    setdataSource(roleObj[roleId] === 'superadmin' ? list :[
+    setdataSource(roleObj[roleId] === 'superadmin' ? list : [
       // 超级管理员不限制，区域管理员：自己+自己区域编辑，区域编辑：看不到用户列表
       ...list.fliter((item:any) => item.author === username),
       ...list.filter((item:any) => item.region === region && roleObj[item.roleId] === 'editor')
@@ -54,7 +57,7 @@ export default function Audit() {
       title:'操作',
       render:(item:any) => {
         return <div>
-          <Button type="primary" onClick={()=>handleAudit(item,2,1)}>操作</Button>
+          <Button type="primary" onClick={()=>handleAudit(item,2,1)} style={{marginRight:'20px'}}>通过</Button>
           <Button danger onClick={()=>handleAudit(item,3,0)}>驳回</Button>
         </div>
       }

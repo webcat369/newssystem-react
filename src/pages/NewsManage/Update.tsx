@@ -1,5 +1,5 @@
 import React,{useState,useRef,useEffect} from 'react'
-import { PageHeader,Steps,Form,Input,Select,Button,message } from 'antd'
+import { PageHeader,Steps,Form,Input,Select,Button,message,notification } from 'antd'
 import style from './scss/News.module.scss'
 import { categories } from 'api/categories'
 import NewsEditor from 'components/NewsManage/NewsEditor'
@@ -50,8 +50,16 @@ export default function Update() {
       "content": content,
       "auditState": auditState,
     })
-    console.log('保存草稿箱',id,data); 
-    
+    console.log('保存草稿箱',id,data,auditState); 
+    if(data){
+      navigate(auditState === 0 ? '/news-manage/draft' : '/audit-manage/list')
+      notification.info({
+        message: `通知`,
+        description:
+          `您可以到${auditState===0?'草稿箱':'审核列表'}中查看您的新闻`,
+        placement:"bottomRight",
+      })
+    }
   }
 
   const handleNext = () => {
@@ -158,7 +166,7 @@ export default function Update() {
           {
             current === 2 && <span>
               <Button type="primary" onClick={() => handleSave(0)}>保存草稿箱</Button>
-              <Button danger onChange={() => handleSave(1)}>提交审核</Button>
+              <Button danger onClick={() => handleSave(1)}>提交审核</Button>
             </span>
           }
           {
