@@ -154,6 +154,7 @@ const mapStateToProps = ({CollapsedReducer: {isCollapsed}}:any)=>({isCollapsed})
 const enhance = connect(mapStateToProps)
 // 返回值为 HOC，它会返回已经连接 Redux store 的组件
 export default enhance(SideMenu)
+//换句话说，connect 是一个返回高阶组件的高阶函数！
 
 //简写：
 // export default connect(mapStateToProps)(SideMenu)
