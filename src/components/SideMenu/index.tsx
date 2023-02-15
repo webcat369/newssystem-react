@@ -149,4 +149,11 @@ function SideMenu(props:any) {
 }
 const mapStateToProps = ({CollapsedReducer: {isCollapsed}}:any)=>({isCollapsed})
 
-export default connect(mapStateToProps)(SideMenu)
+
+// connect 是一个函数，它的返回值为另外一个函数。
+const enhance = connect(mapStateToProps)
+// 返回值为 HOC，它会返回已经连接 Redux store 的组件
+export default enhance(SideMenu)
+
+//简写：
+// export default connect(mapStateToProps)(SideMenu)
