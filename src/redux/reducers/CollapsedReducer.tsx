@@ -1,6 +1,10 @@
-export const CollapsedReducer = (prevState={
+// 定义一个状态
+let initialState = {
   isCollapsed:false
-},action:any)=>{
+};
+
+
+export const CollapsedReducer = (prevState = initialState ,action:any)=>{
   let {type} =action
 
   switch(type){
