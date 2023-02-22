@@ -38,3 +38,10 @@ npm run build
 
 #### 文档
 请参考[项目文档](https://www.cnblogs.com/shixiu/p/15983351.html)
+
+### 版本介绍
+* react: "^18.2.0",
+* react-dom: "^18.2.0"
+* react-redux: "^8.0.5",
+* react-router-dom: "^6.2.2",
+* redux: "^4.2.0",
