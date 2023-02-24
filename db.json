@@ -132,7 +132,8 @@
         "/right-manage/role/list",
         "/right-manage/role/delete",
         "/right-manage/right/delete",
-        "/home"
+        "/home",
+        "/setting-manage"
       ]
     },
     {
@@ -393,6 +394,13 @@
       "id": 24,
       "title": "发布管理",
       "key": "/publish-manage",
+      "pagepermisson": 1,
+      "grade": 1
+    },
+    {
+      "id": 28,
+      "title": "设置",
+      "key": "/setting-manage",
       "pagepermisson": 1,
       "grade": 1
     }

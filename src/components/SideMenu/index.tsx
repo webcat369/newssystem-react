@@ -65,6 +65,7 @@ const iconList:any = {
   "/publish-manage/unpublished":'',
   "/publish-manage/published":'',
   "/publish-manage/sunset":'',
+  "/setting-manage":<SettingOutlined />,
   //.......
 }
 

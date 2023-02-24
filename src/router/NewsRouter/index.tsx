@@ -21,6 +21,7 @@ const Published = lazy(()=> import('../../pages/PublishManage/Published'))
 const Sunset = lazy(()=> import('../../pages/PublishManage/Sunset'))
 const NewsPreview = lazy(()=> import('../../pages/NewsManage/Preview'))
 const NewsUpdate = lazy(()=> import('../../pages/NewsManage/Update'))
+const Setting = lazy(()=> import('../../pages/Setting'))
 // 路由与组件映射
 const LocalRouterMap:any = {
   "/home": <Home />,
@@ -36,7 +37,8 @@ const LocalRouterMap:any = {
   "/audit-manage/list": <AuditList />, //审核列表
   "/publish-manage/unpublished": <Unpublished />, //待发布
   "/publish-manage/published": <Published />, //已发布
-  "/publish-manage/sunset":<Sunset /> //已下线
+  "/publish-manage/sunset":<Sunset />, //已下线
+  "/setting-manage":<Setting /> //设置
 }
 
 function NewsRouter(props:any) {

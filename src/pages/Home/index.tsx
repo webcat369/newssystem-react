@@ -23,6 +23,9 @@ import {
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers';
 
+import {themeStyles} from '../../style/style'
+import {connect} from 'react-redux'
+
 // 注册必须的组件
 Echarts.use([
   TitleComponent,
@@ -36,7 +39,7 @@ Echarts.use([
 ]);
 const { Meta } = Card;
 
-export default function Home() {
+function Home(props:any) {
   const barRef = useRef(null)
   const pieRef = useRef(null)
   const [viewList,setviewList] = useState([])
@@ -50,6 +53,8 @@ export default function Home() {
   useEffect(() => {
     getViewList()
     getStarList()
+    console.log(props.theme,'111111111');
+    
   },[])
 
   useEffect(() => {
@@ -194,11 +199,14 @@ export default function Home() {
     setvisible(false)
   }
 
+  const stylesTheme = themeStyles['light']
+  console.log(stylesTheme.backgroundColor1,'stylesTheme');
+  
   return (
     <div>
       <Row gutter={16}>
         <Col span={8}>
-          <Card title="用户最常浏览" bordered={true}>
+          <Card title="用户最常浏览" bordered={true} style={stylesTheme.backgroundColor1}>
             <List
               size="small"
               bordered={false}
@@ -277,3 +285,7 @@ export default function Home() {
     </div>
   )
 }
+
+const mapStateToProps = ({ThemeRender:{theme}}:any)=>({theme})
+
+export default connect(mapStateToProps)(Home)
